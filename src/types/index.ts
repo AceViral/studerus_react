@@ -1,25 +1,43 @@
-export interface Istate {
+export interface IstateForRegisterForm {
     username: string,
     email: string,
     password: string,
     confirmPassword: string,
-    isError: isErrorType,
-    isTouched: isTouchedType,
+    isError: isErrorTypeForRegisterForm,
+    isTouched: isTouchedTypeForRegisterForm,
     show: boolean
 }
 
-export interface IisError {
-    isError: isErrorType
-}
-type isErrorType = {
+type isErrorTypeForRegisterForm = {
     email: string;
     username: string;
     password: string;
     confirmPassword: string;
 }
-type isTouchedType = {
+type isTouchedTypeForRegisterForm = {
     email: boolean;
     username: boolean;
     password: boolean;
     confirmPassword: boolean;
 }
+
+export interface IstateForLoginForm {
+    username: string,
+    email: string,
+    password: string,
+    isError: isErrorTypeForLoginForm,
+    isTouched: isTouchedTypeForLoginForm,
+    show: boolean
+}
+
+type isErrorTypeForLoginForm = {
+    email: string;
+    username: string;
+    password: string;
+}
+type isTouchedTypeForLoginForm = {
+    email: boolean;
+    username: boolean;
+    password: boolean;
+}
+

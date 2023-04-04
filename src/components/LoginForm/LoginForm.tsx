@@ -1,26 +1,23 @@
 import React, { ChangeEvent, FormEvent } from "react";
-import { IstateForRegisterForm } from "../../types";
-import "./RegisterForm.scss";
-import { useNavigate } from "react-router-dom";
+import { IstateForLoginForm } from "../../types";
+import "./LoginForm.scss";
 import instance from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
-export class RegisterForm extends React.Component<{ navigate: any }> {
-  state: IstateForRegisterForm = {
+export class LoginForm extends React.Component<{ navigate: any }> {
+  state: IstateForLoginForm = {
     username: "",
     email: "",
     password: "",
-    confirmPassword: "",
     isError: {
       email: "",
       username: "",
       password: "",
-      confirmPassword: "",
     },
     isTouched: {
       email: false,
       username: false,
       password: false,
-      confirmPassword: false,
     },
     show: false,
   };
@@ -33,29 +30,25 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
   onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (this.formValid(this.state)) {
-      try {
-        const userData = {
-          username: this.state.username,
-          email: this.state.email,
-          password: this.state.password,
-        };
-        instance
-          .post("/auth/register", userData)
-          .then(() => {
-            this.props.navigate("/");
-          })
-          .catch(() => {
-            alert("error");
-          });
-      } catch (error) {
-        console.error("Registration failed", error);
-      }
+      const userData = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+      };
+      instance
+        .post("/auth/login", userData)
+        .then(() => {
+          this.props.navigate("/");
+        })
+        .catch(() => {
+          alert("error");
+        });
     } else {
       console.log("Form is invalid!");
     }
   };
 
-  formValid = ({ isError, ...rest }: IstateForRegisterForm): boolean => {
+  formValid = ({ isError, ...rest }: IstateForLoginForm): boolean => {
     let isValid = true;
     Object.values(isError).forEach((val) => {
       if (val.length > 0) {
@@ -79,7 +72,7 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
         isError.username =
           value.length < 4 ? "Atleast 4 characaters required" : "";
         if (!this.state.isTouched.username) {
-          this.setState((prevState: IstateForRegisterForm) => {
+          this.setState((prevState: IstateForLoginForm) => {
             return { isTouched: { ...prevState.isTouched, username: true } };
           });
         }
@@ -89,7 +82,7 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
           ? ""
           : "Email address is invalid";
         if (!this.state.isTouched.email) {
-          this.setState((prevState: IstateForRegisterForm) => {
+          this.setState((prevState: IstateForLoginForm) => {
             return { isTouched: { ...prevState.isTouched, email: true } };
           });
         }
@@ -99,19 +92,8 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
           ? ""
           : "Password is incorrect";
         if (!this.state.isTouched.password) {
-          this.setState((prevState: IstateForRegisterForm) => {
+          this.setState((prevState: IstateForLoginForm) => {
             return { isTouched: { ...prevState.isTouched, password: true } };
-          });
-        }
-        break;
-      case "confirmPassword":
-        isError.confirmPassword =
-          value !== this.state.password ? "Passwords do not match" : "";
-        if (!this.state.isTouched.confirmPassword) {
-          this.setState((prevState: IstateForRegisterForm) => {
-            return {
-              isTouched: { ...prevState.isTouched, confirmPassword: true },
-            };
           });
         }
         break;
@@ -125,7 +107,7 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
   };
 
   openHidePass = () => {
-    this.setState((prevState: IstateForRegisterForm) => {
+    this.setState((prevState: IstateForLoginForm) => {
       return { show: !prevState.show };
     });
   };
@@ -205,29 +187,9 @@ export class RegisterForm extends React.Component<{ navigate: any }> {
           <div className="text_field__message">{isError.password}</div>
         </div>
 
-        <div className="text_field text_field_floating password_field">
-          <input
-            className={[
-              isTouched.confirmPassword &&
-                (isError.confirmPassword.length > 0
-                  ? "text_field__input_invalid"
-                  : "text_field__input_valid"),
-              "text_field__input",
-            ].join(" ")}
-            onChange={this.formValChange}
-            type={this.state.show ? "text" : "password"}
-            name="confirmPassword"
-            id="confirmPassword"
-          />
-          <label className="text_field__label" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
-          <div className="text_field__message">{isError.confirmPassword}</div>
-        </div>
-
         <div className="button-block">
           <button type="submit" className="submit_btn" disabled={!isFormValid}>
-            Register
+            Login
           </button>
         </div>
       </form>
