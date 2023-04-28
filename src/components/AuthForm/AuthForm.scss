@@ -1,4 +1,9 @@
-.register_form {
+h2 {
+  text-transform: uppercase;
+  font-size: 52px;
+  font-weight: 700;
+}
+.auth_form {
   background: #8cbdb9;
   display: flex;
   justify-content: center;
@@ -6,6 +11,10 @@
   border-radius: 10px;
   gap: 20px;
   flex-direction: column;
+  -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+
   .text_field {
     margin-bottom: 1rem;
   }
@@ -165,18 +174,8 @@
       cursor: not-allowed;
     }
   }
-
-  .password_field {
-    position: relative;
-    .hide_show_btn {
-      position: absolute;
-      cursor: pointer;
-      background-color: #fff;
-      border: none;
-      right: 5%;
-      top: 25%;
-      width: 30px;
-      height: 30px;
-    }
+  p {
+    text-align: center;
+    cursor: pointer;
   }
 }

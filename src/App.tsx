@@ -1,24 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
-import RegisterForm from "./components/RegisterForm";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import LoginForm from "./components/LoginForm";
+import { Route, Routes } from "react-router-dom";
 import MainPage from "./components/MainPage";
+import Loader from "./components/Loader";
+import AuthForm from "./components/AuthForm";
 
 function App() {
-  const navigate = useNavigate();
-  return (
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  return !isLoading ? (
     <div className="App">
-      <h2>Studerus-Client</h2>
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route
           path="/register"
-          element={<RegisterForm navigate={navigate} />}
+          element={
+            <AuthForm
+              type={"register"}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          }
         />
-        <Route path="/login" element={<LoginForm navigate={navigate} />} />
+        <Route
+          path="/login"
+          element={
+            <AuthForm
+              type={"login"}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+            />
+          }
+        />
       </Routes>
     </div>
+  ) : (
+    <Loader />
   );
 }
 

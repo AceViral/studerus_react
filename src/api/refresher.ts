@@ -139,7 +139,7 @@ class Refresher {
         removeRefreshToken();
         this._refreshQueue?.reject(error);
         this._isRefreshing = false;
-        // window.location.replace('/login');
+        window.location.replace('/login');
         return Promise.reject(error);
     }
 }

@@ -1,0 +1,32 @@
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  gap: 16px;
+  padding: 16px;
+}
+
+.note-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  width: calc(20% - 16px);
+  height: calc(20% - 16px);
+}
+
+.note-card input[type="text"] {
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  width: 100%;
+}
+
+.note-card p {
+  color: #444;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 0;
+}
