@@ -55,7 +55,7 @@ class RefreshQueue {
     }
 }
 
-const isAccessTokenExpired = (): boolean => {
+export const isAccessTokenExpired = (): boolean => {
     const accessToken = getAccessToken();
     if (!accessToken) return true;
     try {

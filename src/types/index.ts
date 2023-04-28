@@ -41,3 +41,9 @@ type isTouchedTypeForLoginForm = {
     password: boolean;
 }
 
+export interface INotification {
+    type: "error";
+    text: string;
+}
+
+

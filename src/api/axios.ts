@@ -8,7 +8,7 @@ export type AxiosConfigT = {
     withCredentials?: boolean;
 };
 
-const API_URL = "http://localhost:8080/api";
+const API_URL = "https://studerus.online/api";
 
 const axiosConfig: AxiosConfigT = {
     baseURL: API_URL,
@@ -23,7 +23,6 @@ instance.interceptors.request.use(async (req) => {
 })
 
 instance.interceptors.response.use((res) => {
-    console.log(res);
     if (res.data.access_token) {
         setAccessToken(res.data.access_token);
         setRefreshToken(res.data.refresh_token);

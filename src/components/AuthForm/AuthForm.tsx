@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import "./AuthForm.scss";
 import instance from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { isAccessTokenExpired } from "../../api/refresher";
+import { INotification } from "../../types";
 
 interface Props {
   isLoading: boolean;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setNotifications: React.Dispatch<React.SetStateAction<INotification[]>>;
+  notifications: INotification[];
   type: "login" | "register";
 }
 
@@ -21,13 +25,15 @@ export const AuthForm: React.FC<Props> = ({
   isLoading,
   setIsLoading,
   type,
+  setNotifications,
+  notifications,
 }) => {
   const navigate = useNavigate();
 
   const initialValues: FormValues = {
-    username: "",
-    email: "",
-    password: "",
+    username: "student",
+    email: "student@studerus.ru",
+    password: "Te$t12344",
   };
 
   const validationSchema = Yup.object().shape({
@@ -47,15 +53,32 @@ export const AuthForm: React.FC<Props> = ({
 
   const onSubmit = async (values: FormValues) => {
     setIsLoading(true);
-    try {
-      await instance.post(`/auth/${type}`, values);
-      setIsLoading(false);
-      navigate("/");
-    } catch (error) {
-      setIsLoading(false);
-      console.log("Form is invalid!");
-    }
+    await instance
+      .post(`/auth/${type}`, values)
+      .then((response) => {
+        console.log(response);
+        setIsLoading(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        if (error.response.data.status === 403) {
+          console.log(error.response.data);
+          const notification: INotification = {
+            type: "error",
+            text: error.response.data.message,
+          };
+          setNotifications([notification, ...notifications]);
+          setTimeout(() => {
+            setNotifications(notifications.filter((elem) => notification));
+          }, 10000);
+        }
+      });
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (!isAccessTokenExpired()) navigate("/");
+  });
 
   return (
     <Formik

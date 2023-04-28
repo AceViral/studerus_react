@@ -1,0 +1,22 @@
+.notification {
+  min-width: 200px;
+  max-width: 300px;
+  background-color: #e87e7e;
+  border-radius: 10px;
+  padding: 5px 20px;
+  opacity: 0;
+  animation: notificationAnim 0.5s forwards;
+  cursor: pointer;
+  h3 {
+    text-transform: uppercase;
+  }
+}
+
+@keyframes notificationAnim {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
