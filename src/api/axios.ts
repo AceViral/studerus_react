@@ -9,7 +9,7 @@ export type AxiosConfigT = {
 };
 
 const API_URL = "https://studerus.online/api";
-
+// const API_URL = "http://localhost/api";
 const axiosConfig: AxiosConfigT = {
     baseURL: API_URL,
     timeout: 25000,

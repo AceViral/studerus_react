@@ -5,11 +5,12 @@ import MainPage from "./components/MainPage";
 import Loader from "./components/Loader";
 import AuthForm from "./components/AuthForm";
 import Notification from "./components/Notification";
-import { INotification } from "./types";
+import { INote, INotification } from "./types";
 
 function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [notifications, setNotifications] = useState<INotification[]>([]);
+  const [notes, setNotes] = useState<INote[]>([]);
   return !isLoading ? (
     <div className="App">
       <div className="notification_block">
@@ -28,7 +29,10 @@ function App() {
       </div>
 
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route
+          path="/"
+          element={<MainPage notes={notes} setNotes={setNotes} />}
+        />
         <Route
           path="/register"
           element={

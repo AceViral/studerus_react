@@ -2,13 +2,25 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage, FormikProps } from "formik";
 import * as Yup from "yup";
 import instance from "../../api/axios";
+import { INote } from "../../types";
 
 interface FormValues {
   title: string | null;
   content: string | null;
 }
-
-export const NoteForm: React.FC = () => {
+interface Props {
+  notes: INote[];
+  setNotes: React.Dispatch<React.SetStateAction<INote[]>>;
+}
+export const NoteForm: React.FC<Props> = ({ notes, setNotes }) => {
+  const fetchData = async () => {
+    try {
+      const { data }: { data: INote[] } = await instance.get("/note/get-note");
+      setNotes(data);
+    } catch (error) {
+      alert(error);
+    }
+  };
   const initialValues: FormValues = {
     title: "",
     content: "",
@@ -19,9 +31,12 @@ export const NoteForm: React.FC = () => {
     content: Yup.string().required().nullable(),
   });
 
-  const onSubmit = async (values: FormValues) => {
+  const onSubmit = async (values: FormValues, { resetForm }: any) => {
     try {
-      await instance.post("/note/create-note", values);
+      await instance.post("/note/create-note", values).then((responce) => {
+        resetForm(initialValues);
+      });
+      fetchData();
     } catch (error) {
       console.log("Form is invalid!");
     }
