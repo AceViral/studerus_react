@@ -31,9 +31,9 @@ export const AuthForm: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const initialValues: FormValues = {
-    username: "student",
-    email: "student@studerus.ru",
-    password: "Te$t12344",
+    username: "",
+    email: "",
+    password: "",
   };
 
   const validationSchema = Yup.object().shape({
